@@ -19,44 +19,60 @@
                 bootSales: []
             }
         },
-        created() {
+        mounted() {
             this.setUp()
         },
         methods: {
             setUp: async function () {
                 try {
                     const google = await mapInit.init();
-                    const locations = await mapInit.findNearby(this.latitude, this.longitude);
                     const geocoder = new google.maps.Geocoder();
-                    const map = new google.maps.Map(this.$el);
+
+                    const locations = await mapInit.findNearby(this.latitude, this.longitude);
                     this.bootSales = locations.results;
 
+                    const map = new google.maps.Map(this.$el);
+                    let bounds = new google.maps.LatLngBounds();
+
+                    let markers = [];
+
+
+                    console.log(this.latitude + " " + this.longitude)
                     geocoder.geocode({
                         'location': new google.maps.LatLng(this.latitude, this.longitude)
-                    },
-                        (results, status) => {
+                    },(results, status) => {
                             if (status !== 'OK' || !results[0]) {
-                                throw new Error(status);
+                                console.log("An error occurred.");
+                                console.log(status);
                             }
 
-                            
-                            map.setCenter(results[0].geometry.location);
-                            map.fitBounds(results[0].geometry.viewport);
-
-                            let bounds = new google.maps.LatLngBounds();
-                            let markers = [];
                             if (this.bootSales) {
                                 for (let i = 0; i < this.bootSales.length; i++) {
                                     let m = new google.maps.Marker({
                                         position: new google.maps.LatLng(this.bootSales[i].geometry.location.lat, this.bootSales[i].geometry.location.lng),
                                         map: map
                                     });
-                                    //ensures zoom of map covers all markers available
+                                    //ensures zoom of map covers all markers
                                     markers.push(m.position);
+                                    let str =
+                                        '<div id="content">' +
+                                        '<h3 id="firstHeading" class="firstHeading">' + this.bootSales[i].name + '</h3>' +
+                                        '<div id="bodyContent">' +
+                                        '<p>' + this.bootSales[i].vicinity + '</p>' +
+                                        '</div>' +
+                                        '</div>';
                                     bounds.extend(markers[i]);
+
+                                    m.addListener('click', function () {
+                                        new google.maps.InfoWindow({
+                                            content: str
+                                        }).open(map, m);
+                                    });
                                 }
-                                this.$emit('mapLoaded');
+                                this.$emit('loaded');
                             }
+
+                            map.setCenter(results[0].geometry.location);
                             map.fitBounds(bounds);
                         });
                 } catch (error) {

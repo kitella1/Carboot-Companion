@@ -46,13 +46,6 @@ export default
             let proxy = `https://cors-anywhere.herokuapp.com/`;
 
             ////circumventing CORS error https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
-            //await fetch(proxy + url)
-            //    .then(response => response.json())
-            //    .then(contents => {
-            //        return contents.results;
-            //    })
-            //    .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
-
             const response = await fetch(proxy + url);
             const json = await response.json();
             return json;

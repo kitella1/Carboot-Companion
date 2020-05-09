@@ -6,11 +6,11 @@
             Unfortunately, an error occurred: {{errorStr}}
         </p>
 
-        <p v-if="pending">
+        <p v-if="!mapLoaded">
             Loading...
         </p>
 
-        <gMap id="map" v-if="location.coords.latitude && location.coords.longitude && !pending" @mapLoaded="mapLoaded" :latitude="location.coords.latitude" :longitude="location.coords.longitude"/>
+        <gMap id="map" v-if="this.location.coords.latitude && this.location.coords.longitude && !this.pending" @loaded="this.loaded" :latitude="location.coords.latitude" :longitude="location.coords.longitude"/>
     </div>
 </template>
 
@@ -50,6 +50,7 @@
             return {
                 errorStr: ``,
                 pending: false,
+                mapLoaded: false,
                 location: {
                     coords: {
                         latitude: 0,
@@ -81,16 +82,15 @@
                     }
 
                     navigator.geolocation.getCurrentPosition(pos => {
-                        resolve(pos);
                         this.pending = false;
+                        resolve(pos);
                     }, err => {
                         reject(err);
                     });
                 });
             },
-            mapLoaded: function () {
-                this.pending = false;
-                console.log("Setup complete!");
+            loaded: function () {
+                this.mapLoaded = true        
             }
         }
     }
