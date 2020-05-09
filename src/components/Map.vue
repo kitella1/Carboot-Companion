@@ -38,18 +38,26 @@
                             if (status !== 'OK' || !results[0]) {
                                 throw new Error(status);
                             }
+
+                            
                             map.setCenter(results[0].geometry.location);
                             map.fitBounds(results[0].geometry.viewport);
 
+                            let bounds = new google.maps.LatLngBounds();
+                            let markers = [];
                             if (this.bootSales) {
                                 for (let i = 0; i < this.bootSales.length; i++) {
-                                    new google.maps.Marker({
+                                    let m = new google.maps.Marker({
                                         position: new google.maps.LatLng(this.bootSales[i].geometry.location.lat, this.bootSales[i].geometry.location.lng),
                                         map: map
                                     });
+                                    //ensures zoom of map covers all markers available
+                                    markers.push(m.position);
+                                    bounds.extend(markers[i]);
                                 }
                                 this.$emit('mapLoaded');
                             }
+                            map.fitBounds(bounds);
                         });
                 } catch (error) {
                     console.error(error);
