@@ -4,11 +4,8 @@
     "\\public",
     "\\src",
     "\\src\\assets",
-    "\\src\\components",
-    "\\src\\router",
-    "\\src\\styles",
-    "\\src\\views"
+    "\\src\\components"
   ],
-  "SelectedNode": "\\src\\components\\listItem.vue",
+  "SelectedNode": "\\src\\components\\ListItem.vue",
   "PreviewInSolutionExplorer": false
 }

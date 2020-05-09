@@ -1,6 +1,11 @@
 <template>
     <li class="listItem">
-        <div class="details">
+        <router-link :to="link" class="details">
+            <p class="title">{{ title }}</p>
+            <p class="desc">{{ desc }}</p>
+        </router-link>
+
+        <div v-if="link.length > 0" class="details">
             <p class="title">{{ title }}</p>
             <p class="desc">{{ desc }}</p>
         </div>
@@ -26,6 +31,17 @@
         word-wrap: break-word;
     }
 
+    p {
+        margin: 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: $font;
+    }
+
+    a.disabled
+
     title {
         justify-self: flex-start;
     }
@@ -35,10 +51,6 @@
         font-size: 0.9em;
         justify-self: flex-start;
         overflow-wrap: break-word;
-    }
-
-    p {
-        margin: 0;
     }
 
     button {
@@ -53,6 +65,7 @@
         font-size: 0.8em;
         padding: 1em;
         height: 50%;
+        z-index: 2;
     }
 
     @media only screen and (min-width: 400px) {
@@ -65,6 +78,6 @@
 <script>
 export default {
         name: 'ListItem',
-        props: ['title', 'desc']
+        props: ['title', 'desc', 'link']
 }
 </script>

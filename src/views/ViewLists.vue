@@ -1,8 +1,10 @@
 <template>
     <div class="lists">
-        <h1>Shopping Lists</h1>
+        <h1>Boot Lists</h1>
         <ul>
-            <li is="ListItem" v-for="(item, index) in listItems" :key="index" :title="item.title" :desc="item.desc" v-on:remove="listItems.splice(index, 1)" />
+            <li id="noLists" v-if="this.lists.length < 1">No lists yet.</li>
+            <li is="ListItem" :title="item.title" v-on:remove="removeList(index)" :key="item.id" v-for="(item, index) in lists" :link="{ name: 'EditList', 
+           params: { listID: item.id }}" />
         </ul>
     </div>
 </template>
@@ -18,8 +20,21 @@
         flex-direction: column;
         justify-content: center;
         padding: 0em;
+        & *
+
+    {
+        color: $font;
+        text-decoration: none;
+    }
     }
 
+    #noLists {
+        width: 85%;
+        list-style: none;
+        color: $fontLight;
+        justify-self: center;
+        text-align: center;
+    }
 </style>
 
 <script>
@@ -32,49 +47,34 @@
         },
         data() {
             return {
-                listItems: [
-                    {
-                        id: 1,
-                        title: 'Ketch Car Boot sale'
-                    },
-                    {
-                        id: 2,
-                        title: 'Tesco Car Park Sale'
-                    },
-                    {
-                        id: 3,
-                        title: 'Powyck Car Boot'
-                    },
-                    {
-                        id: 4,
-                        title: 'Comer Gardens Church Sale'
-                    },
-                    {
-                        id: 5,
-                        title: 'Title'
-                    },
-                    {
-                        id: 6,
-                        title: 'Title'
-                    },
-                    {
-                        id: 7,
-                        title: 'Title'
-                    },
-                    {
-                        id: 8,
-                        title: 'Title'
-                    },
-                    {
-                        id: 9,
-                        title: 'Title'
-                    }
+                lists: [
                 ],
                 nextId: 10
             }
         },
+        mounted() {
+            if (localStorage.getItem('Available lists')) {
+                try {
+                    this.lists = JSON.parse(localStorage.getItem('Available lists'));
+                } catch (e) {
+                    localStorage.removeItem('Available lists');
+                    console.log(e.toString())
+                }
+            }
+        },
+        beforeDestroy() {
+            let parsed = JSON.stringify(this.lists);
+            localStorage.setItem("Available lists", parsed);
+        },
         methods: {
-            
+            saveList() {
+                let parsed = JSON.stringify(this.lists);
+                localStorage.setItem("Available lists", parsed);
+            },
+            removeList(index) {
+                this.lists.splice(index, 1)
+                this.saveList()
+            }
         }
-}
+    }
 </script>
