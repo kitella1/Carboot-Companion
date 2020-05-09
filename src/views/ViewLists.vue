@@ -29,7 +29,6 @@
     }
 
     #noLists {
-        width: 85%;
         list-style: none;
         color: $fontLight;
         justify-self: center;

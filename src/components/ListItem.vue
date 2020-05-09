@@ -1,14 +1,13 @@
 <template>
     <li class="listItem">
-        <router-link :to="link" class="details">
-            <p class="title">{{ title }}</p>
-            <p class="desc">{{ desc }}</p>
-        </router-link>
-
-        <div v-if="link.length > 0" class="details">
+        <div v-if="this.link.params.listID.length === 0" class="details">
             <p class="title">{{ title }}</p>
             <p class="desc">{{ desc }}</p>
         </div>
+        <router-link v-else :to="link" class="details">
+            <p class="title">{{ title }}</p>
+            <p class="desc">{{ desc }}</p>
+        </router-link>
         <button v-on:click="$emit('remove')">Remove</button>
     </li>
 </template>
@@ -78,6 +77,9 @@
 <script>
 export default {
         name: 'ListItem',
-        props: ['title', 'desc', 'link']
+        props: ['title', 'desc', 'link'],
+        mounted() {
+            console.log()
+        }
 }
 </script>

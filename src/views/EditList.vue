@@ -29,7 +29,7 @@
         </form>
         <ul>
             <li is="ListItem" v-for="(item, index) in list.items" :key="index" :title="item.title" :desc="item.desc" v-on:remove="removeItem(index)" :link="{ name: 'EditList', 
-           params: { link: `1234`}}" />
+           params: { listID: ``}}" />
         </ul>
     </div>
 </template>
@@ -74,7 +74,7 @@
     }
 
     &:nth-child(1) {
-        padding: 0.2em 1em;
+        padding: 0.2em;
         text-align: center;
     }
 
@@ -117,7 +117,7 @@
         data() {
             return {
                 list: {
-                    id: this.listID,
+                    id: '',
                     name: `New List Name`,
                     items: []
                 },
@@ -129,10 +129,11 @@
             }
         },
         mounted() {
-            if (this.list.id) {
-                if (localStorage.getItem(this.list.id)) {
+            if (this.listID) {
+                if (localStorage.getItem(this.listID)) {
                     try {
-                        this.list = JSON.parse(localStorage.getItem(this.list.id));
+                        this.list.id = this.listID
+                        this.list = JSON.parse(localStorage.getItem(this.listID));
                     } catch (e) {
                         localStorage.removeItem(this.listID);
                         console.log(e.toString())
@@ -195,18 +196,20 @@
                 for (let i = 0; i < availableLists.length; i++) {
                     if (availableLists[i].id === this.list.id) {
                         newList = false
+                        availableLists[i].title = this.list.name
                     }
                 }
+
                 //If not already there, add new list id
-                if (newList) {                    
+                if (newList) {
                     availableLists.push({
                         id: this.list.id,
                         title: this.list.name
                     })
-
-                    let parsedIDList = JSON.stringify(availableLists);
-                    localStorage.setItem("Available lists", parsedIDList);
                 }
+
+                let parsedIDList = JSON.stringify(availableLists);
+                localStorage.setItem("Available lists", parsedIDList);
 
                 //Update list items
                 let parsedList = JSON.stringify(this.list);
