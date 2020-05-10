@@ -44,6 +44,7 @@
                             if (status !== 'OK' || !results[0]) {
                                 console.log("An error occurred.");
                                 console.log(status);
+                                //TODO: Catch offline error message or display default map
                             }
 
                             if (this.bootSales) {
