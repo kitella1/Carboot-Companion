@@ -10,7 +10,7 @@
             Loading...
         </p>
 
-        <gMap id="map" v-if="this.location.coords.latitude && this.location.coords.longitude && !this.pending" @loaded="this.loaded" :latitude="location.coords.latitude" :longitude="location.coords.longitude"/>
+        <gMap id="map" v-if="this.location.coords.latitude && this.location.coords.longitude && !this.pending" @loaded="this.loaded" :latitude="location.coords.latitude" :longitude="location.coords.longitude" />
     </div>
 </template>
 
@@ -20,7 +20,7 @@
         flex-direction: column;
         align-items: center;
         margin: 0em 2em;
-        width: 100%;
+        width: 90vw;
     }
 
     button {
@@ -34,8 +34,8 @@
         letter-spacing: 1.5px;
         font-size: 0.9em;
         padding: 0.8em;
-    }   
-    
+    }
+
     #map {
         margin-top: 1em;
     }
@@ -51,6 +51,7 @@
                 errorStr: ``,
                 pending: false,
                 mapLoaded: false,
+                offline: false,
                 location: {
                     coords: {
                         latitude: 0,
@@ -90,7 +91,7 @@
                 });
             },
             loaded: function () {
-                this.mapLoaded = true        
+                this.mapLoaded = true
             }
         }
     }

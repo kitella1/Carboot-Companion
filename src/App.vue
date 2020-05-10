@@ -75,7 +75,7 @@
         padding-bottom: 4em;
     }
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (min-width: 200px) {
 
         h1, h2, h3 {
             font-family: 'Raleway','Roboto', Helvetica, Arial, sans-serif;

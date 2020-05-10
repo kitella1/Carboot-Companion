@@ -1,10 +1,19 @@
 <template>
-    <div id="map" />
+    <div>
+        <div v-if="!offline" id="map" />
+    </div>
 </template>
 <style lang="scss" scoped>
-    #map {
-        width: 90vw;
+    #map, .offline {
+        width: 100%;
         height: 70vh;
+    }
+
+    .offline {
+        background-size: cover;
+        background-position: center;
+        max-width: 642px;
+        background-image: url('/img/appImages/fallback.png');
     }
 </style>
 
@@ -16,11 +25,17 @@
         props: ["latitude", "longitude"],
         data() {
             return {
+                offline: false,
                 bootSales: []
             }
         },
         mounted() {
-            this.setUp()
+            if (navigator.onLine) {
+                this.setUp()
+            }
+            else {
+                document.getElementById('map').classList.add('offline');
+            }
         },
         methods: {
             setUp: async function () {
@@ -44,7 +59,6 @@
                             if (status !== 'OK' || !results[0]) {
                                 console.log("An error occurred.");
                                 console.log(status);
-                                //TODO: Catch offline error message or display default map
                             }
 
                             if (this.bootSales) {

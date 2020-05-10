@@ -3,10 +3,16 @@ if (workbox) {
     workbox.setConfig({
         debug: false,
     });
-    workbox.precaching.precacheAndRoute([]);
+    workbox.precaching.precacheAndRoute([
+        {
+            url: '/img/appImages/fallback.png',
+            revision: 'e0f8c4b2cf490147284ab35072d7ce25'
+        }
+    ]);
     workbox.routing.registerNavigationRoute('/index.html');
+
     workbox.routing.registerRoute(
-        /\.(?:png|gif|jpg|jpeg|svg|webp)$/,
+        ({ request }) => request.destination === 'image',
         workbox.strategies.cacheFirst({
             cacheName: 'images',
             plugins: [
@@ -15,13 +21,21 @@ if (workbox) {
                     maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
                 }),
             ],
-        })
+        }),
     );
+
     workbox.routing.registerRoute(
         /\.(?:js|css)$/,
         workbox.strategies.staleWhileRevalidate({
             cacheName: 'static-resources',
         })
+    );
+
+
+    //Maps
+    workbox.routing.registerRoute(
+        ({ url }) => url.origin === 'https://cors-anywhere.herokuapp.com/',
+        workbox.strategies.networkOnly()
     );
 
 } else {
