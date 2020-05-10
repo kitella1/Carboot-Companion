@@ -79,7 +79,6 @@ export default {
         name: 'ListItem',
         props: ['title', 'desc', 'link'],
         mounted() {
-            console.log()
         }
 }
 </script>
