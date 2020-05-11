@@ -2,12 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\public",
+    "\\public\\img",
+    "\\public\\img\\appImages",
     "\\src",
-    "\\src\\assets",
     "\\src\\components",
-    "\\src\\router",
+    "\\src\\services",
     "\\src\\views"
   ],
-  "SelectedNode": "\\src\\router\\index.js",
+  "SelectedNode": "\\src\\components\\Map.vue",
   "PreviewInSolutionExplorer": false
 }

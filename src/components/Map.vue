@@ -1,19 +1,12 @@
 <template>
     <div>
-        <div v-if="!offline" id="map" />
+        <div id="map" />
     </div>
 </template>
 <style lang="scss" scoped>
-    #map, .offline {
+    #map {
         width: 100%;
         height: 70vh;
-    }
-
-    .offline {
-        background-size: cover;
-        background-position: center;
-        max-width: 642px;
-        background-image: url('/img/appImages/fallback.png');
     }
 </style>
 
@@ -25,17 +18,11 @@
         props: ["latitude", "longitude"],
         data() {
             return {
-                offline: false,
                 bootSales: []
             }
         },
-        mounted() {
-            if (navigator.onLine) {
-                this.setUp()
-            }
-            else {
-                document.getElementById('map').classList.add('offline');
-            }
+        created() {
+            this.setUp()
         },
         methods: {
             setUp: async function () {

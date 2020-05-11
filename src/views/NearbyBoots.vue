@@ -1,16 +1,18 @@
 <template>
     <div class="nearby">
         <h1>Nearby Boot Sales</h1>
+        <button @click="this.search">shalom</button>
 
         <p v-if="errorStr">
             Unfortunately, an error occurred: {{errorStr}}
         </p>
 
-        <p v-if="!mapLoaded">
+        <p v-if="loading">
             Loading...
         </p>
 
-        <gMap id="map" v-if="this.location.coords.latitude && this.location.coords.longitude && !this.pending" @loaded="this.loaded" :latitude="location.coords.latitude" :longitude="location.coords.longitude" />
+        <div v-if="!online" class="offlineMap" />
+        <gMap id="map" v-if="this.location.coords.latitude && this.location.coords.longitude" @loaded="this.loaded" :latitude="location.coords.latitude" :longitude="location.coords.longitude" />
     </div>
 </template>
 
@@ -39,6 +41,14 @@
     #map {
         margin-top: 1em;
     }
+    .offlineMap {
+        width: 100%;
+        height: 70vh;
+        background-size: cover;
+        background-position: center;
+        max-width: 642px;
+        background-image: url('/img/appImages/fallback.png');
+    }
 </style>
 
 <script>
@@ -49,9 +59,8 @@
         data() {
             return {
                 errorStr: ``,
-                pending: false,
-                mapLoaded: false,
-                offline: false,
+                online: navigator.onLine,
+                loading: false,
                 location: {
                     coords: {
                         latitude: 0,
@@ -63,16 +72,14 @@
         components: {
             gMap
         },
-        mounted() {
-            this.pending = true;
-            this.update();
-        },
         methods: {
-            update: async function () {
+            search: async function () {
                 try {
+                    this.loading = true;
                     this.location = await this.getLocation();
-                } catch (e) {
-                    this.pending = false;
+                }
+                catch (e) {
+                    this.loading = false;
                     this.errorStr = e.message;
                 }
             },
@@ -83,7 +90,6 @@
                     }
 
                     navigator.geolocation.getCurrentPosition(pos => {
-                        this.pending = false;
                         resolve(pos);
                     }, err => {
                         reject(err);
@@ -91,7 +97,7 @@
                 });
             },
             loaded: function () {
-                this.mapLoaded = true
+                this.loading = false;
             }
         }
     }
