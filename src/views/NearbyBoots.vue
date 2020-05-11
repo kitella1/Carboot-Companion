@@ -1,7 +1,7 @@
 <template>
     <div class="nearby">
         <h1>Nearby Boot Sales</h1>
-        <button @click="this.search">shalom</button>
+        <button v-if="online" @click="this.search">Search</button>
 
         <p v-if="errorStr">
             Unfortunately, an error occurred: {{errorStr}}
