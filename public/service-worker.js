@@ -7,6 +7,12 @@ if (workbox) {
         {
             url: '/img/appImages/fallback.png',
             revision: 'e0f8c4b2cf490147284ab35072d7ce25'
+        },
+        {
+            url: '/img/icons/favicon-32x32.png'
+        },
+        {
+            url: '/img/icons/favicon-16x16.png'
         }
     ]);
     workbox.routing.registerNavigationRoute('/index.html');
