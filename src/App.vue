@@ -11,7 +11,7 @@
             <img src="img/appimages/logo.png" alt="Carboot companion logo" srcset="img/appimages/logo_1x.png 1x,img/appimages/logo.png 2x" id="subImg">
         </picture>
         <router-view id="view" />
-        <div id="nav">
+        <div v-if="auth" id="nav">
             <router-link to="/edit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-plus" style="fill:none;stroke-linejoin:round;stroke-width:2;stroke:currentColor">
                     <line x1="12" y1="5" x2="12" y2="19" />
@@ -147,10 +147,26 @@
 <script>
     import firebase from "firebase";
     export default {
+        data() {
+            return {
+                auth: null
+            }
+        },
         mounted() {
             if (!('indexedDB' in window)) {
                 console.log('This browser doesn\'t support IndexedDB');
                 return;
+            }            
+        },
+        watch: {
+            $route(to, from) {
+                console.log(to + from)
+                if (this.$router.history.current.name === 'LogIn' || this.$router.history.current.name === 'SignUp') {
+                    this.auth = false
+                }
+                else {
+                    this.auth = true
+                }
             }
         },
         methods: {
