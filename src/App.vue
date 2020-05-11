@@ -37,6 +37,14 @@
                 </svg>
                 <p>Find</p>
             </router-link>
+            <a v-on:click="logOut">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-log-out" style="fill:none;stroke-linejoin:round;stroke-width:2;stroke:currentColor">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                <p>Log out</p>
+            </a>
         </div>
     </div>
 </template>
@@ -75,7 +83,7 @@
         padding-bottom: 4em;
     }
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (min-width: 200px) {
 
         h1, h2, h3 {
             font-family: 'Raleway','Roboto', Helvetica, Arial, sans-serif;
@@ -137,11 +145,22 @@
 </style>
 
 <script>
+    import firebase from "firebase";
     export default {
         mounted() {
             if (!('indexedDB' in window)) {
                 console.log('This browser doesn\'t support IndexedDB');
                 return;
+            }
+        },
+        methods: {
+            logOut: function () {
+                event.preventDefault();
+                firebase
+                    .auth()
+                    .signOut().then(() => {
+                        this.$router.replace("login");
+                    });
             }
         }
     }

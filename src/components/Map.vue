@@ -1,9 +1,11 @@
 <template>
-    <div id="map" />
+    <div>
+        <div id="map" />
+    </div>
 </template>
 <style lang="scss" scoped>
     #map {
-        width: 90vw;
+        width: 100%;
         height: 70vh;
     }
 </style>
@@ -19,7 +21,7 @@
                 bootSales: []
             }
         },
-        mounted() {
+        created() {
             this.setUp()
         },
         methods: {
