@@ -37,7 +37,6 @@ if (workbox) {
         })
     );
 
-
     //Maps
     workbox.routing.registerRoute(
         ({ url }) => url.origin === 'https://cors-anywhere.herokuapp.com/',

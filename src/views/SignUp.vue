@@ -18,7 +18,7 @@
                    placeholder="Password"
                    autocomplete="current-password"
                    required />
-            <label>Password confirmation</label>
+            <label for="passwordConfirmInput">Password confirmation</label>
             <input type="password"
                    v-model="passwordConfirm"
                    id="passwordConfirmInput"
