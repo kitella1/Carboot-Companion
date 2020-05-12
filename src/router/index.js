@@ -15,7 +15,7 @@ const routes = [
             header_text: 'Secured edit list page',
             title: 'Carboot Companion | Edit list',
             description: `Edit a list or make a new one.`,
-            //requiresAuth: true
+            requiresAuth: true
         },
         component: () => import(/* webpackChunkName: "edit" */ '../views/EditList.vue'),
         props: true
@@ -27,7 +27,7 @@ const routes = [
             header_text: 'Secured list view page',
             title: 'Carboot Companion | View lists',
             description: `This page stores the lists you've made.`,
-            //requiresAuth: true
+            requiresAuth: true
         },
         component: () => import(/* webpackChunkName: "lists" */ '../views/ViewLists.vue')
     },
@@ -38,7 +38,7 @@ const routes = [
             header_text: 'Secured find page',
             title: 'Carboot Companion | Find nearby carboots',
             description: 'Use this page to find carboots near you.',
-            //requiresAuth: true
+            requiresAuth: true
         },
         component: () => import(/* webpackChunkName: "lists" */ '../views/NearbyBoots.vue')        
     },
