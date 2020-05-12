@@ -108,7 +108,7 @@
         }
 
     #nav {
-        background: $secondary;
+        background: $secondaryDark;
         width: 100%;
         display: flex;
         justify-content: space-around;
@@ -142,6 +142,16 @@
             }
         }
     }
+    @media only screen and (min-width: 450px) {
+        #logo {
+            width: 10%;
+            & *
+            {
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
 </style>
 
 <script>
@@ -149,7 +159,7 @@
     export default {
         data() {
             return {
-                auth: null
+                auth: true
             }
         },
         mounted() {

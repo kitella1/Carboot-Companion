@@ -1,14 +1,13 @@
 <template>
     <div class="new">
-        <h2>
+        <form id="newItem" v-on:submit.prevent="addItem">
+            <label class="label" for="listName">List Name</label>
             <input autocomplete="off"
                    maxlength="20"
                    v-model="list.name"
                    id="listName"
                    placeholder="Powyck Car Boot Sale"
                    v-on:input="titleListener">
-        </h2>
-        <form id="newItem" v-on:submit.prevent="addItem">
             <label class="label" for="newItemTitle">What are you looking for?</label>
             <input autocomplete="off"
                    maxlength="20"
@@ -54,11 +53,19 @@
             justify-content: center;
             align-items: center;
             & .label
+            {
+                align-self: flex-start; 
+            }
+        }
 
-    {
-        align-self: flex-start;
+    #listName {
+        padding: 0.2em;
+        text-align: center;
+        font-size: 1.5em;
+        margin-bottom: 1.4em;
     }
-
+    label:nth-child(1) {
+        margin-bottom: 0.5em;
     }
 
     input {
@@ -68,16 +75,9 @@
         box-sizing: border-box;
         padding: 1em;
         &:focus
-
-    {
-        border: 1px solid $primary;
-    }
-
-    &:nth-child(1) {
-        padding: 0.2em;
-        text-align: center;
-    }
-
+        {
+            border: 1px solid $primary;
+        }
     }
 
     .characterCount {
@@ -89,7 +89,7 @@
     }
 
     button {
-        background: $secondary;
+        background: $secondaryDark;
         border-radius: 5px;
         border: none;
         box-shadow: 5px 5px 5px -9px rgba(0,0,0,0.75);
