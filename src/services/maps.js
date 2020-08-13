@@ -1,6 +1,6 @@
 //import axios from "axios";
 
-const API_KEY = 'AIzaSyCWqSLV8cRYJZRVWKf95euMstiLcfmF4f4';
+const API_KEY = 'INSERT API KEY';
 const CALLBACK_NAME = 'mapCallback';
 
 let initialized = !!window.google;
